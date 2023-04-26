@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ajouter un personnage</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    </head>
+    <body>
+        <main class="container">
+            <h1>Ajouter un personnage</h1>
+            <form action="/create" method="post">
+                <label for="nom">Nom :</label>
+                <input type="text" name="nom" id="nom" required>
+                <br>
+                <label for="photo">URL Photo :</label>
+                <input type="text" name="photo" id="photo" required>
+                <br>
+                <label for="description">Description :</label>
+                <textarea name="description" id="description"></textarea>
+                <br>
+                <label for="equipe_id">Équipe :</label>
+                <select name="equipe_id" id="equipe_id">
+                    {{#equipes}}
+                        <option value="{{ id }}">{{ nom }}</option>
+                    {{/equipes}}
+                </select>
+                <br>
+                <button type="submit">Ajouter</button>
+            </form>
+            <a href="/">Retour à la liste des personnages</a>
+        </main>
+    </body>
+</html>
