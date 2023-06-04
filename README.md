@@ -68,39 +68,7 @@ app.post("/create", (req, res) => {
   });
 });
 ```
-- Modifions ce code afin d'effectuer un appel api afin de récupérer le background avant d'enregistrer le personnage
-```javascript
- /**
-   * Route pour traiter le formulaire de création
-   */
-  app.post("/create", (req, res) => {
-    const { nom, photo, description, equipe_id } = req.body;
-
-    //Appel api
-    fetch('https://super-hero-gpt.kaffein.tech/api/hero-background',{
-      'method': 'post',
-      'headers': {
-        'Authorization' : 'Bearer <Ajouter le token>',
-        'Content-Type' : 'application/json',
-        'accept' : 'application/json',
-      },
-      'body' : JSON.stringify({name: nom, description: description})
-    }).then((response)=>{
-      return response.json();
-    }).then((data)=>{ 
-      console.log(data)
-      const query = /*sql*/ `
-            INSERT INTO personnages (nom, photo, description, background, equipe_id) 
-            VALUES (?, ?, ?, ?, ?)
-        `;
-    
-      db.query(query, [data.data.name, photo, data.data.description, data.data.background, equipe_id], (err, result) => {
-        if (err) throw err;
-        res.redirect("/");
-      });
-    })
-  });
-```
+- **Créer le code permettant de faire la requête à l'api Super Hero GPT et de récupérer l'histoire du personnage que vous créez.**
 
 ## Étape 4 : Mise à jour de l'affichage pour ajouter le background du personnage
 - La route index récupère les personnages en base de données avant des les afficher dans la vue index.mustache
