@@ -68,7 +68,27 @@ app.post("/create", (req, res) => {
   });
 });
 ```
-- **Créer le code permettant de faire la requête à l'api Super Hero GPT et de récupérer l'histoire du personnage que vous créez.**
+- **Créer le code permettant de faire la requête à l'api Super Hero GPT et de récupérer l'histoire du personnage avant de l'enregistrer en base de données.**
+```javascript
+/**
+ * Route pour traiter le formulaire de création
+ */
+app.post("/create", (req, res) => {
+  const { nom, photo, description, equipe_id } = req.body;
+
+  // Utilisez fetch() ainsi que les promesses pour créer la requête api.
+
+  const query = /*sql*/ `
+      INSERT INTO personnages (nom, photo, description, equipe_id) 
+      VALUES (?, ?, ?, ?)
+  `;
+
+  db.query(query, [nom, photo, description, equipe_id], (err, result) => {
+    if (err) throw err;
+    res.redirect("/");
+  });
+});
+```
 
 ## Étape 4 : Mise à jour de l'affichage pour ajouter le background du personnage
 - La route index récupère les personnages en base de données avant des les afficher dans la vue index.mustache
