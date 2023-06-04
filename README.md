@@ -2,195 +2,54 @@
 
 🚀 Salut à tous les super-héros du code ! 🚀
 
-Bienvenue dans le projet Marvel CRUD ! 🌟 L'objectif de ce projet est de vous apprendre à créer une application web pour gérer les personnages et les équipes de l'univers Marvel en utilisant NodeJS, Express, Mustache, MySQL, Nodemon et Pico.css. 💪
+Bienvenue dans le projet Marvel CRUD Version 2 ! 🌟 L'objectif de ce projet est d'améliorer la création de nouveaux personnages en utilisant une API. 💪
 
-Au cours de ce projet, vous allez acquérir de nouvelles compétences et renforcer celles que vous avez déjà, notamment :
+Dans cette nouvelle version du TP Marvel CRUD, nous allons améliorer notre application en ajoutant un champ "background" pour chaque personnage et en utilisant l'API Fetch pour récupérer ces informations à partir du nom et de la description du personnage.
 
-- Créer et gérer des bases de données MySQL 🗃️
-- Utiliser phpMyAdmin pour explorer et manipuler les données 🕵️‍♀️
-- Comprendre les principes relationnels et les clés étrangères 🔗
-- Intégrer MySQL dans votre application NodeJS 🤖
-- Créer un CRUD complet (Create, Read, Update, Delete) pour les personnages et les équipes de Marvel 📝
-
-Alors, enfilez votre cape, préparez-vous à sauver le monde (ou du moins à gérer les personnages de Marvel) et plongez dans ce projet passionnant ! 🦸‍♀️🦸‍♂️
 
 Bonne chance et amusez-vous bien ! 😄🎉 
+## Objectifs :
+
+- Ajouter un champ "background" dans la table "personnages" de la base de données.
+- Utiliser ```fetch()``` pour créer un appel api et récupérer le background du personnage à partir de son nom et de sa description avant de l'enregistrer en base de données.
+- Mettre à jour l'affichage de la liste des personnage en ajoutant le background du personnage.
 
 ## Avant de démarrer
 
-[Présentation Google Slides](https://docs.google.com/presentation/d/1qqbm3Fes2CKzyuqVvXYBSmvclokaqZFtkYwtG2hzIhc/edit?usp=sharing)
+[Présentation Google Slides](https://docs.google.com/presentation/d/1Oy0s2lG9BEEdyan9QHYXwLwU2WLFu2HhPSxSfvC7daY/edit?usp=sharing)
 
-## Etape 0 : Apprendre MySQL ! 
+## Etape 0 : L'api Super Hero GPT  
 
-- https://colibri.unistra.fr/fr/course/list/notions-de-base-en-sql
-- https://sql.sh/cours
+ - Durant cette exercice vous allez être ammené à utiliser une API qui génére l'histoire d'un personnage à partir de son nom et de sa description
+ - [Api Super Hero GPT](https://super-hero-gpt.kaffein.tech)
 
+ Cette histoire est généré grâce à l'Intelligence Artificielle d'OpenAI
+ 
+ - Créer un compte sur cette api en haut à droite vous trouveres le bouton "Register" 
+ - Saisissez votre Nom Email et Mot de passe pour vous créer un compte 
 
-## Étape 1 : Initialisation du projet
+ - Une fois votre compte créé, rendez vous dans "Dashboard" puis cliquez sur votre nom toujours en haut à droite enfi rendez vous sur API tokens.
 
-```bash
-mkdir marvel-crud
-cd marvel-crud
-npm init -y
-npm install express mustache mustache-express mysql
-```
+ - Vous allez maintenant créer un token afin de pouvoir vous connectez à partir de l'application Marvel Crud 
 
-### En cas de problème avec nodemon
+## Étape 1 : Récupération du projet
 
-> ⚠️ Si vous avez des problèmes lors de ce projet lorsque vous lancez nodemon, avec l'erreur suivante : `Error: listen EADDRINUSE: address already in use :::3000` 
-> 
-> Alors tapez la commande suivante : `fuser -k 3000/tcp; nodemon`
+Vous allez pouvoir récuperer votre projet Marvel crud qui sera notre base de travail pour la suite
 
-### Installation de Xampp
-
-Voici les instructions pour installer un serveur local MySQL (MariaDB) sur un poste Windows de manière simple et rapide en utilisant XAMPP :
-
-1. Allez sur le site officiel de XAMPP : https://www.apachefriends.org/index.html
-2. Cliquez sur le bouton "Download" pour télécharger la dernière version de XAMPP pour Windows.
-3. Une fois le téléchargement terminé, lancez le fichier d'installation de XAMPP.
-4. Suivez les instructions de l'assistant d'installation. Laissez les options par défaut cochées, y compris MySQL.
-5. Cliquez sur "Next" jusqu'à ce que l'installation démarre. Une fois l'installation terminée, cliquez sur "Finish".
-6. Lancez XAMPP Control Panel depuis le menu Démarrer ou le raccourci créé sur le bureau.
-7. Dans le XAMPP Control Panel, cliquez sur le bouton "Start" à côté de "Apache" et "MySQL" pour démarrer les services.
-8. Ouvrez votre navigateur et accédez à http://localhost/phpmyadmin pour accéder à l'interface de gestion de MySQL.
-9. Vous pouvez maintenant créer des bases de données, des tables et gérer vos données à l'aide de phpMyAdmin.
-
-## Étape 2 : Création de la base de données
-1. Créer la base de données "marvel"
-   - Cliquez sur l'onglet "Bases de données" en haut de la page.
-   - Entrez "marvel" dans le champ "Nom de la base de données" et cliquez sur "Créer".
-
-2. Créer la table "personnages"
+## Étape 2 : Modification de la base de données
+1. Rendez-vous sur votre phpmyadmin vous y retrouverez ainsi votre base de donnée du 
    - Sélectionnez la base de données "marvel" dans l'arborescence de gauche.
-   - Cliquez sur l'onglet "Structure", puis sur "Nouvelle table".
-   - Nommez la table "personnages" et définissez le nombre de colonnes à 5, puis cliquez sur "Exécuter".
-   - Ajoutez les colonnes suivantes :
-     - id : INT, clé primaire, auto-incrément
-     - nom : VARCHAR(255), non nul
-     - description : TEXT, nullable
-     - photo : VARCHAR(255), nullable
-     - equipe_id : INT, nullable
-   - Cliquez sur "Enregistrer" pour créer la table "personnages".
 
-3. Créer la table "equipes"
-   - Cliquez sur l'onglet "Structure", puis sur "Nouvelle table".
-   - Nommez la table "equipes" et définissez le nombre de colonnes à 2, puis cliquez sur "Exécuter".
-   - Ajoutez les colonnes suivantes :
-     - id : INT, clé primaire, auto-incrément
-     - nom : VARCHAR(255), non nul
-   - Cliquez sur "Enregistrer" pour créer la table "equipes".
+2. Modifier la table "personnages"
+   - Sélectionnez la table "personnages" puis rendez vous dans l'onglet "Structure".
+   - Vous allez pouvoir créer une nouvelle colonne à votre table a l'aide du petit formulaire. 
+   - "Ajouter 1 colonne après equipe_id" puis Cliquer sur "Excécuter"
+   - Ajoutez la colonne nommée "background" :
+     - background : LONGTEXT, valeur par default:null, nullable
+   - Cliquez sur "Enregistrer" pour créer la nouvelle colonne.
 
-4. Définir la relation entre les tables "personnages" et "equipes"
-   - Sélectionnez la table "personnages" dans l'arborescence de gauche.
-   - Cliquez sur l'onglet "Relation" et sélectionnez "equipe_id" comme colonne source et "equipes.id" comme colonne cible.
-   - Cliquez sur "Enregistrer" pour créer la relation entre les deux tables.
-
-5. Insérer des données de test
-   - Sélectionnez la table "equipes" et cliquez sur l'onglet "Insérer".
-   - Entrez des données pour une ou
-
-## Étape 3 : Connexion à la base de données
-- Créez un fichier database.js dans le dossier du projet.
-- Ajoutez le code suivant pour configurer et exporter la connexion à la base de données MySQL :
-```javascript
-const mysql = require('mysql');
-
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'marvel'
-});
-
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to the database!');
-});
-module.exports = connection;
-```
-
-## Étape 4 : Configuration du serveur Express et du moteur de template Mustache
-- Créez un fichier index.js dans le dossier du projet.
-- Créez un dossier `views` qui contiendra les fichiers de template Mustache.
-- Ajoutez le code suivant pour configurer le serveur Express et le moteur de template Mustache :
-
-```javascript
-const express = require('express');
-const mustacheExpress = require('mustache-express');
-const app = express();
-
-/**
- * Configuration de mustache
- * comme moteur de template
- * pour l'extension .mustache
- */
-app.engine("mustache", mustacheExpress());
-app.set("view engine", "mustache");
-app.set("views", __dirname + "/views");
-
-/**
- * Configuration de express
- * pour récupérer les données d'un formulaire
- * et pour servir les fichiers statiques
- * (css, js, images, etc.)
- */
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
-
-// Routes à ajouter ici
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
-```
-
-## Étape 5 : Affichage de la liste des personnages
-- Dans le fichier index.js, ajoutez une route pour récupérer et afficher la liste des personnages avec leur équipe
-```javascript
-const db = require('./database');
-
-/**
- * Route pour afficher la liste des personnages
- */
-app.get("/", (req, res) => {
-  // Requête SQL pour récupérer la liste des personnages
-  const query = /*sql*/ `
-      SELECT p.*, e.nom as nom_equipe 
-      FROM personnages as p 
-      JOIN equipes AS e 
-      ON p.equipe_id = e.id
-  `;
-
-  db.query(query, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.render("index", { personnages: result });
-  });
-});
-```
-
-- Créez un fichier index.mustache dans le dossier views et ajoutez le code HTML pour afficher la liste des personnages et des équipes.
-
-## Étape 6 : Formulaire de création de personnages et d'équipes
-- Ajoutez une route pour afficher le formulaire de création de personnages et d'équipes dans le fichier index.js :
-```javascript
-/**
- * Route pour afficher le formulaire de création
- */
-app.get("/create", (req, res) => {
-  const query = /*sql*/ `
-      SELECT * FROM equipes
-  `;
-
-  db.query(query, (err, result) => {
-    if (err) throw err;
-    res.render("create", { equipes: result });
-  });
-});
-```
-
-- Créez un fichier create.mustache dans le dossier views et ajoutez le code HTML pour le formulaire de création de personnages et d'équipes.
-- Ajoutez une route pour gérer la soumission du formulaire et insérer les données dans la base de données :
+## Étape 3 : Modification de la création du personnage
+- Voici le code actuel que vous devez avoir : 
 ```javascript
 /**
  * Route pour traiter le formulaire de création
@@ -209,15 +68,64 @@ app.post("/create", (req, res) => {
   });
 });
 ```
+- Modifions ce code afin d'effectuer un appel api afin de récupérer le background avant d'enregistrer le personnage
+```javascript
+ /**
+   * Route pour traiter le formulaire de création
+   */
+  app.post("/create", (req, res) => {
+    const { nom, photo, description, equipe_id } = req.body;
 
-## Étape 7 : Modification et suppression des personnages
-- Ajoutez des routes pour afficher le formulaire de modification et gérer la soumission du formulaire.
-- Ajoutez des routes pour gérer la suppression des personnages.
+    //Appel api
+    fetch('https://super-hero-gpt.kaffein.tech/api/hero-background',{
+      'method': 'post',
+      'headers': {
+        'Authorization' : 'Bearer <Ajouter le token>',
+        'Content-Type' : 'application/json',
+        'accept' : 'application/json',
+      },
+      'body' : JSON.stringify({name: nom, description: description})
+    }).then((response)=>{
+      return response.json();
+    }).then((data)=>{ 
+      console.log(data)
+      const query = /*sql*/ `
+            INSERT INTO personnages (nom, photo, description, background, equipe_id) 
+            VALUES (?, ?, ?, ?, ?)
+        `;
+    
+      db.query(query, [data.data.name, photo, data.data.description, data.data.background, equipe_id], (err, result) => {
+        if (err) throw err;
+        res.redirect("/");
+      });
+    })
+  });
+```
 
-## Étape 8 : Finalisation
-- Testez toutes les fonctionnalités du projet et assurez-vous qu'elles fonctionnent correctement.
-- Ajoutez des commentaires dans votre code pour mieux se souvenir de ce qu'il fait
+## Étape 4 : Mise à jour de l'affichage pour ajouter le background du personnage
+- La route index récupère les personnages en base de données avant des les afficher dans la vue index.mustache
+- analyson la request sql créer ici : 
+```javascript
+  /**
+   * Route pour afficher la liste des personnages
+   */
+  app.get("/", (req, res) => {
 
-## Étape 9 : Aller plus loin
-- Ajouter le code nécessaire pour créer une nouvelle équipe
-- Ajouter un filtre pour afficher les personnages par équipe dans la vue index.mustache.
+    const query = /*sql*/ `
+        SELECT p.*, e.nom as nom_equipe 
+        FROM personnages as p 
+        JOIN equipes AS e 
+        ON p.equipe_id = e.id
+    `;
+
+    db.query(query, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      res.render("index", { personnages: result });
+    });
+  });
+```
+
+- Cette requete sql récupère toute les données de la table personnage (p.*). La nouvelle colonne que nous avons ajouté precédement sera donc aussi récupéré. Tous va bien à ce niveau la du code nous n'avons rien à changer les données de la table personnage sont bien envoyer à la page index.mustache.
+- Ajouter le code nessecaire pour afficher le background du personnage.
+

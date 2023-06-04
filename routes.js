@@ -5,6 +5,7 @@ const routes = (app) => {
    * Route pour afficher la liste des personnages
    */
   app.get("/", (req, res) => {
+
     const query = /*sql*/ `
         SELECT p.*, e.nom as nom_equipe 
         FROM personnages as p 
@@ -39,15 +40,29 @@ const routes = (app) => {
   app.post("/create", (req, res) => {
     const { nom, photo, description, equipe_id } = req.body;
 
-    const query = /*sql*/ `
-        INSERT INTO personnages (nom, photo, description, equipe_id) 
-        VALUES (?, ?, ?, ?)
-    `;
-
-    db.query(query, [nom, photo, description, equipe_id], (err, result) => {
-      if (err) throw err;
-      res.redirect("/");
-    });
+    //Appel api
+    fetch('https://super-hero-gpt.kaffein.tech/api/hero-background',{
+      'method': 'post',
+      'headers': {
+        'Authorization' : 'Bearer a2hHl9iDdqIvUp3lC0NG9eoSktYNPhuouRApicCc',
+        'Content-Type' : 'application/json',
+        'accept' : 'application/json',
+      },
+      'body' : JSON.stringify({name: nom, description: description})
+    }).then((response)=>{
+      return response.json();
+    }).then((data)=>{ 
+      console.log(data)
+      const query = /*sql*/ `
+            INSERT INTO personnages (nom, photo, description, background, equipe_id) 
+            VALUES (?, ?, ?, ?, ?)
+        `;
+    
+      db.query(query, [data.data.name, photo, data.data.description, data.data.background, equipe_id], (err, result) => {
+        if (err) throw err;
+        res.redirect("/");
+      });
+    })
   });
 
   /**

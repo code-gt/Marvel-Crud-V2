@@ -15,7 +15,7 @@ app.set("views", __dirname + "/views");
  * Configuration de express
  * pour récupérer les données d'un formulaire
  * et pour servir les fichiers statiques
- * (css, js, images, etc.)
+ * (css, js, images, etc.) 
  */
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
