@@ -1,4 +1,4 @@
-# Projet CRUD Marvel
+# Projet CRUD Marvel V2
 
 🚀 Salut à tous les super-héros du code ! 🚀
 
@@ -45,7 +45,7 @@ Vous allez pouvoir récuperer votre projet Marvel crud qui sera notre base de tr
    - Vous allez pouvoir créer une nouvelle colonne à votre table a l'aide du petit formulaire. 
    - "Ajouter 1 colonne après equipe_id" puis Cliquer sur "Excécuter"
    - Ajoutez la colonne nommée "background" :
-     - background : LONGTEXT, valeur par default:null, nullable
+     - background : LONGTEXT, valeur par default: null, nullable
    - Cliquez sur "Enregistrer" pour créer la nouvelle colonne.
 
 ## Étape 3 : Modification de la création du personnage
