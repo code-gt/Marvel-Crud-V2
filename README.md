@@ -37,7 +37,7 @@ Bonne chance et amusez-vous bien ! 😄🎉
 Vous allez pouvoir récuperer votre projet Marvel crud qui sera notre base de travail pour la suite
 
 ## Étape 2 : Modification de la base de données
-1. Rendez-vous sur votre phpmyadmin vous y retrouverez ainsi votre base de donnée du 
+1. Rendez-vous sur votre phpmyadmin vous y retrouverez ainsi la base de donnée créé lors de la première partie du TP
    - Sélectionnez la base de données "marvel" dans l'arborescence de gauche.
 
 2. Modifier la table "personnages"
