@@ -31,6 +31,8 @@ Bonne chance et amusez-vous bien ! 😄🎉
  - Une fois votre compte créé, rendez vous dans "Dashboard" puis cliquez sur votre nom toujours en haut à droite enfi rendez vous sur API tokens.
 
  - Vous allez maintenant créer un token afin de pouvoir vous connectez à partir de l'application Marvel Crud 
+ 
+ - Voici la documentation Swagger de l'api [Documentation Super Hero GPT](https://super-hero-gpt.kaffein.tech/api/documentation)
 
 ## Étape 1 : Récupération du projet
 
@@ -115,5 +117,5 @@ app.post("/create", (req, res) => {
 ```
 
 - Cette requete sql récupère toute les données de la table personnage (p.*). La nouvelle colonne que nous avons ajouté precédement sera donc aussi récupéré. Tous va bien à ce niveau la du code nous n'avons rien à changer les données de la table personnage sont bien envoyer à la page index.mustache.
-- Ajouter le code nessecaire pour afficher le background du personnage.
+- Ajouter le code necessaire pour afficher le background du personnage.
 
